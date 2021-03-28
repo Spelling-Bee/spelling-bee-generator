@@ -1,6 +1,6 @@
 import fs from "fs";
 
-class TextFile {
+class ReadTextFile {
   path: string;
   iterator: Generator<string>;
 
@@ -39,4 +39,4 @@ class TextFile {
   }
 }
 
-export default TextFile;
+export default ReadTextFile;
