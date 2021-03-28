@@ -25,12 +25,14 @@ describe("WriteTextFile", () => {
     expect(fs.existsSync(target)).toBe(false);
 
     writeTextFile.writeLine("Hello World");
-    writeTextFile.writeLine("Hello World2");
+    writeTextFile.writeLine("Hello World2\n");
+    writeTextFile.writeLine("Hello World3");
 
     expect(fs.existsSync(target)).toBe(true);
 
     const readTextFile = new ReadTextFile(filePath);
     expect(readTextFile.readLine()).toBe("Hello World");
     expect(readTextFile.readLine()).toBe("Hello World2");
+    expect(readTextFile.readLine()).toBe("Hello World3");
   });
 });

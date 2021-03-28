@@ -1,12 +1,12 @@
-import OnlyValidCharacters from "../../src/Rules/OnlyValidCharacters";
-import Rule from "../../src/Rules/Rule";
+import OnlyValidCharacters from "../../../src/Rules/WordRules/OnlyValidCharacters";
+import WordRule from "../../../src/Rules/WordRules/WordRule";
 
 describe("OnlyValidCharacters", () => {
   const letters = ["a", "b", "c"];
   it("can be instantiated", () => {
     const rule = new OnlyValidCharacters(letters);
 
-    expect(rule).toBeInstanceOf(Rule);
+    expect(rule).toBeInstanceOf(WordRule);
     expect(rule).toBeInstanceOf(OnlyValidCharacters);
   });
 

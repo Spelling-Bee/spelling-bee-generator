@@ -1,2 +1,3 @@
-// tslint:disable-next-line:no-console
-console.log("Hello World.");
+function main() {}
+
+export default main();

@@ -1,4 +1,4 @@
-abstract class Rule {
+abstract class WordRule {
   letters: string[];
   constructor(letters: string[]) {
     this.letters = letters;
@@ -7,4 +7,4 @@ abstract class Rule {
   public abstract isValid(word: string): boolean;
 }
 
-export default Rule;
+export default WordRule;

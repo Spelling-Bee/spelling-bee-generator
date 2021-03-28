@@ -8,6 +8,10 @@ class ReadTextFile {
     this.isValidSource(source);
 
     this.path = source;
+    this.resetCursor();
+  }
+
+  public resetCursor() {
     this.iterator = this.readLineIterator();
   }
 
@@ -29,6 +33,7 @@ class ReadTextFile {
     const file = fs.readFileSync(this.path);
     const lines = file.toString().split("\n");
     for (let i = 0; i < lines.length; i++) {
+      if (i + 1 === lines.length && lines[i] === "") break;
       yield lines[i];
     }
     yield null;

@@ -11,11 +11,24 @@ describe("ReadTextFile", () => {
 
   it("can read the text file line by line", () => {
     const readTextFile = new ReadTextFile(source);
-    expect(readTextFile.readLine()).toBe("arc");
+    expect(readTextFile.readLine()).toBe("ar");
     expect(readTextFile.readLine()).toBe("car");
     expect(readTextFile.readLine()).toBe("card");
     expect(readTextFile.readLine()).toBe("cd");
     expect(readTextFile.readLine()).toBe(null);
     expect(readTextFile.readLine()).toBe(undefined);
+  });
+
+  it("can reset the cursor", () => {
+    const readTextFile = new ReadTextFile(source);
+    expect(readTextFile.readLine()).toBe("ar");
+    expect(readTextFile.readLine()).toBe("car");
+    expect(readTextFile.readLine()).toBe("card");
+    expect(readTextFile.readLine()).toBe("cd");
+    expect(readTextFile.readLine()).toBe(null);
+    expect(readTextFile.readLine()).toBe(undefined);
+
+    readTextFile.resetCursor();
+    expect(readTextFile.readLine()).toBe("ar");
   });
 });

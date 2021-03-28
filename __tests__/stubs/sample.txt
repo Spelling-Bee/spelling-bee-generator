@@ -1,4 +1,4 @@
-arc
+ar
 car
 card
 cd
