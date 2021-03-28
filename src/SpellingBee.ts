@@ -13,7 +13,8 @@ class SpellingBee {
   public generateToBeGuessedWords(dictionary: ReadTextFile) {
     this.toBeGuessedWords = [];
     let word: string;
-    while ((word = dictionary.readLine())) {
+    dictionary.resetCursor();
+    while ((word = dictionary.readWord())) {
       if (this.validator.isWordValid(word)) {
         this.toBeGuessedWords.push(word);
       }
@@ -26,7 +27,7 @@ class SpellingBee {
 
   public writeToBeGuessedWords(writer: WriteTextFile) {
     if (this.validator.isGameValid(this.getToBeGuessedWords())) {
-      this.getToBeGuessedWords().forEach(writer.writeLine.bind(writer));
+      this.getToBeGuessedWords().forEach(writer.writeWord.bind(writer));
     }
   }
 }

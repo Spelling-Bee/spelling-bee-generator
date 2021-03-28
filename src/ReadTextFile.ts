@@ -12,7 +12,7 @@ class ReadTextFile {
   }
 
   public resetCursor() {
-    this.iterator = this.readLineIterator();
+    this.iterator = this.readWordIterator();
   }
 
   private isValidSource(source: string) {
@@ -29,7 +29,7 @@ class ReadTextFile {
     return typeof input === "string";
   }
 
-  private *readLineIterator() {
+  private *readWordIterator() {
     const file = fs.readFileSync(this.path);
     const lines = file.toString().split("\n");
     for (let i = 0; i < lines.length; i++) {
@@ -39,7 +39,7 @@ class ReadTextFile {
     yield null;
   }
 
-  public readLine() {
+  public readWord() {
     return this.iterator.next().value;
   }
 }

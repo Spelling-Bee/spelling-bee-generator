@@ -11,24 +11,24 @@ describe("ReadTextFile", () => {
 
   it("can read the text file line by line", () => {
     const readTextFile = new ReadTextFile(source);
-    expect(readTextFile.readLine()).toBe("ar");
-    expect(readTextFile.readLine()).toBe("car");
-    expect(readTextFile.readLine()).toBe("card");
-    expect(readTextFile.readLine()).toBe("cd");
-    expect(readTextFile.readLine()).toBe(null);
-    expect(readTextFile.readLine()).toBe(undefined);
+    expect(readTextFile.readWord()).toBe("ar");
+    expect(readTextFile.readWord()).toBe("car");
+    expect(readTextFile.readWord()).toBe("card");
+    expect(readTextFile.readWord()).toBe("cd");
+    expect(readTextFile.readWord()).toBe(null);
+    expect(readTextFile.readWord()).toBe(undefined);
   });
 
   it("can reset the cursor", () => {
     const readTextFile = new ReadTextFile(source);
-    expect(readTextFile.readLine()).toBe("ar");
-    expect(readTextFile.readLine()).toBe("car");
-    expect(readTextFile.readLine()).toBe("card");
-    expect(readTextFile.readLine()).toBe("cd");
-    expect(readTextFile.readLine()).toBe(null);
-    expect(readTextFile.readLine()).toBe(undefined);
+    expect(readTextFile.readWord()).toBe("ar");
+    expect(readTextFile.readWord()).toBe("car");
+    expect(readTextFile.readWord()).toBe("card");
+    expect(readTextFile.readWord()).toBe("cd");
+    expect(readTextFile.readWord()).toBe(null);
+    expect(readTextFile.readWord()).toBe(undefined);
 
     readTextFile.resetCursor();
-    expect(readTextFile.readLine()).toBe("ar");
+    expect(readTextFile.readWord()).toBe("ar");
   });
 });
