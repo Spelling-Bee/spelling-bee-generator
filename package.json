@@ -1,0 +1,17 @@
+{
+  "name": "spelling-bee-generator",
+  "version": "1.0.0",
+  "description": "Generates Games of Spelling Bee.",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [
+    "Spelling",
+    "Bee",
+    "Node",
+    "TypeScript"
+  ],
+  "author": "Zobeir Hamid",
+  "license": "ISC"
+}
