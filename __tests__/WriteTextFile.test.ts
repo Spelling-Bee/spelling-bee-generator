@@ -8,8 +8,10 @@ describe("WriteTextFile", () => {
   const filePath = path.join(target, fileName);
 
   afterEach(() => {
-    fs.unlinkSync(filePath);
-    fs.rmdirSync(target);
+    if (fs.existsSync(filePath)) {
+      fs.unlinkSync(filePath);
+      fs.rmdirSync(target);
+    }
   });
 
   it("can be instantiated with a path and fileName", () => {

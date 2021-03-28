@@ -13,13 +13,14 @@ class WriteTextFile {
   }
 
   public writeLine(line: string) {
+    this.createTargetDir();
+    fs.appendFileSync(this.filePath, this.addLineSeparator(line));
+  }
+
+  private createTargetDir() {
     if (!fs.existsSync(this.path)) {
       fs.mkdirSync(this.path);
     }
-    fs.appendFileSync(
-      path.join(this.path, this.fileName),
-      this.addLineSeparator(line)
-    );
   }
 
   private addLineSeparator(line: string) {
