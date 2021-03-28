@@ -1,7 +1,7 @@
 {
   "name": "spelling-bee-generator",
   "version": "1.0.0",
-  "description": "Generates Games of Spelling Bee.",
+  "description": "Generates games of Spelling Bee.",
   "main": "index.js",
   "scripts": {
     "test": "jest"
