@@ -1,1 +1,3 @@
-require("./dist/index.js");
+const main = require("./dist/index.js");
+
+main();

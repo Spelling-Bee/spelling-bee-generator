@@ -1,6 +1,6 @@
-import ReadTextFile from "./ReadTextFile";
+import Reader from "./Readers/Reader";
 import Validator from "./Validator";
-import WriteTextFile from "./WriteTextFile";
+import Writer from "./Writers/Writer";
 
 class SpellingBee {
   validator: Validator;
@@ -10,11 +10,11 @@ class SpellingBee {
     this.validator = validator;
   }
 
-  public generateToBeGuessedWords(dictionary: ReadTextFile) {
+  public generateToBeGuessedWords(reader: Reader) {
     this.toBeGuessedWords = [];
     let word: string;
-    dictionary.resetCursor();
-    while ((word = dictionary.readWord())) {
+    reader.reset();
+    while ((word = reader.readLine())) {
       if (this.validator.isWordValid(word)) {
         this.toBeGuessedWords.push(word);
       }
@@ -25,9 +25,9 @@ class SpellingBee {
     return this.toBeGuessedWords;
   }
 
-  public writeToBeGuessedWords(writer: WriteTextFile) {
+  public writeToBeGuessedWords(writer: Writer) {
     if (this.validator.isGameValid(this.getToBeGuessedWords())) {
-      this.getToBeGuessedWords().forEach(writer.writeWord.bind(writer));
+      this.getToBeGuessedWords().forEach(writer.writeLine.bind(writer));
     }
   }
 }

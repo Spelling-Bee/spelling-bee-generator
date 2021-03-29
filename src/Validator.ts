@@ -16,7 +16,7 @@ class Validator {
   }
 
   public isWordValid(word: string) {
-    for (let wordRule of this.wordRules) {
+    for (const wordRule of this.wordRules) {
       if (!wordRule.isValid(word)) {
         return false;
       }
@@ -25,7 +25,7 @@ class Validator {
   }
 
   public isGameValid(toBeGuessedWords: string[]) {
-    for (let gameRule of this.gameRules) {
+    for (const gameRule of this.gameRules) {
       if (!gameRule.isValid(toBeGuessedWords)) {
         return false;
       }

@@ -1,14 +1,8 @@
 import fs from "fs";
-import path from "path";
+import FileWriter from "./FileWriter";
 
-class WriteTextFile {
-  filePath: string;
-
-  constructor(filePath: string) {
-    this.filePath = filePath;
-  }
-
-  public writeWord(line: string) {
+class TextWriter extends FileWriter {
+  public writeLine(line: string) {
     fs.appendFileSync(this.filePath, this.addLineSeparator(line));
   }
 
@@ -20,4 +14,4 @@ class WriteTextFile {
   }
 }
 
-export default WriteTextFile;
+export default TextWriter;

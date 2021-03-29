@@ -8,3 +8,5 @@ yarn.lock
 .gitignore
 README.md
 .DS_STORE
+dictionaries
+output

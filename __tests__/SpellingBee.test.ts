@@ -1,14 +1,14 @@
 import fs from "fs";
 import SpellingBee from "../src/SpellingBee";
 import Validator from "../src/Validator";
-import ReadTextFile from "../src/ReadTextFile";
-import WriteTextFile from "../src/WriteTextFile";
+import TextReader from "../src/Readers/TextReader";
+import TextWriter from "../src/Writers/TextWriter";
 import path from "path";
 import OnlyValidCharacters from "../src/Rules/WordRules/OnlyValidCharacters";
 import HasEnoughWords from "../src/Rules/GameRules/HasEnoughWords";
 
 describe("SpellingBee", () => {
-  const dictionarySource = path.join(__dirname, "stubs", "sample.txt");
+  const dictionary = path.join(__dirname, "stubs", "sample.txt");
   const letters = ["a", "c", "r"];
   const id = "acdr";
 
@@ -18,16 +18,18 @@ describe("SpellingBee", () => {
   const filePath = path.join(target, fileName);
 
   let validator: Validator;
-  let dictionary: ReadTextFile;
-  let output: WriteTextFile;
+  let reader: TextReader;
+  let writer: TextWriter;
 
   beforeEach(() => {
+    /*
     if (!fs.existsSync(target)) {
       fs.mkdirSync(target);
     }
+    */
     validator = new Validator();
-    dictionary = new ReadTextFile(dictionarySource);
-    output = new WriteTextFile(filePath);
+    reader = new TextReader(dictionary);
+    writer = new TextWriter(filePath);
   });
 
   afterEach(() => {
@@ -52,7 +54,7 @@ describe("SpellingBee", () => {
 
   it("can generate toBeGuessedWords from the dictionary", () => {
     const spellingBee = new SpellingBee(validator);
-    spellingBee.generateToBeGuessedWords(dictionary);
+    spellingBee.generateToBeGuessedWords(reader);
     expect(spellingBee.getToBeGuessedWords()).toEqual([
       "ar",
       "car",
@@ -61,13 +63,13 @@ describe("SpellingBee", () => {
     ]);
 
     addWordRules();
-    spellingBee.generateToBeGuessedWords(dictionary);
+    spellingBee.generateToBeGuessedWords(reader);
     expect(spellingBee.getToBeGuessedWords()).toEqual(["ar", "car"]);
   });
 
   it("can save the toBeGuessedWords to a textFile", () => {
     const spellingBee = new SpellingBee(validator);
-    spellingBee.generateToBeGuessedWords(dictionary);
+    spellingBee.generateToBeGuessedWords(reader);
     expect(spellingBee.getToBeGuessedWords()).toEqual([
       "ar",
       "car",
@@ -76,26 +78,26 @@ describe("SpellingBee", () => {
     ]);
 
     expect(fs.existsSync(filePath)).toBeFalsy();
-    spellingBee.writeToBeGuessedWords(output);
+    spellingBee.writeToBeGuessedWords(writer);
     expect(fs.existsSync(filePath)).toBeTruthy();
 
-    const reader = new ReadTextFile(filePath);
-    expect(reader.readWord()).toBe("ar");
-    expect(reader.readWord()).toBe("car");
-    expect(reader.readWord()).toBe("card");
-    expect(reader.readWord()).toBe("cd");
-    expect(reader.readWord()).toBe(null);
+    const gameReader = new TextReader(filePath);
+    expect(gameReader.readLine()).toBe("ar");
+    expect(gameReader.readLine()).toBe("car");
+    expect(gameReader.readLine()).toBe("card");
+    expect(gameReader.readLine()).toBe("cd");
+    expect(gameReader.readLine()).toBe(null);
   });
 
   it("will not save the toBeGuessedWords to a textFile if it does not pass the rules", () => {
     const spellingBee = new SpellingBee(validator);
     addGameRules();
     addWordRules();
-    spellingBee.generateToBeGuessedWords(dictionary);
+    spellingBee.generateToBeGuessedWords(reader);
     expect(spellingBee.getToBeGuessedWords()).toEqual(["ar", "car"]);
 
     expect(fs.existsSync(filePath)).toBeFalsy();
-    spellingBee.writeToBeGuessedWords(output);
+    spellingBee.writeToBeGuessedWords(writer);
     expect(fs.existsSync(filePath)).toBeFalsy();
   });
 });
