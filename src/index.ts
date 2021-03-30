@@ -1,7 +1,7 @@
 import Generator from "@app/SpellingBeeGenerator";
 import Validator from "./app/SpellingBeeValidator";
-import HasEnoughWords from "./app/Rules/GameRules/HasEnoughWords";
-import OnlyValidCharacters from "./app/Rules/WordRules/OnlyValidCharacters";
+import HasEnoughWordsGameRule from "./app/Rules/GameRules/HasEnoughWordsGameRule";
+import OnlyValidCharactersWordRule from "./app/Rules/WordRules/OnlyValidCharactersWordRule";
 import path from "path";
 import fs from "fs";
 import TextReader from "./library/services/Readers/TextReader";
@@ -58,8 +58,8 @@ function generateGameOfGenerator(letters: string[], index: number) {
   const reader = new TextReader(dictionary);
   const writer = new TextWriter(target);
 
-  validator.addGameRule(new HasEnoughWords(10));
-  validator.addWordRule(new OnlyValidCharacters(letters));
+  validator.addGameRule(new HasEnoughWordsGameRule(10));
+  validator.addWordRule(new OnlyValidCharactersWordRule(letters));
 
   sb.generateToBeGuessedWords(reader);
   sb.writeToBeGuessedWords(writer);

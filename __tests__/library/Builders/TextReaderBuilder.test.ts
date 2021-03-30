@@ -1,5 +1,5 @@
-import TextReaderBuilder from "@library/services/Builders/TextReaderBuilder";
-import TextReader from "@library/services/Readers/TextReader";
+import TextReaderBuilder from "@library/Builders/TextReaderBuilder";
+import TextReader from "@library/Readers/TextReader";
 import path from "path";
 
 describe("TextReaderBuilder", () => {

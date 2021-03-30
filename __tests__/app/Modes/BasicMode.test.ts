@@ -1,6 +1,6 @@
 import BasicMode from "@app/Modes/BasicMode";
-import TextReaderBuilder from "@library/services/Builders/TextReaderBuilder";
-import TextWriterBuilder from "@library/services/Builders/TextWriterBuilder";
+import TextReaderBuilder from "@library/Builders/TextReaderBuilder";
+import TextWriterBuilder from "@library/Builders/TextWriterBuilder";
 import { SpellingBeeSettings } from "@app/types";
 import path from "path";
 import fs from "fs";

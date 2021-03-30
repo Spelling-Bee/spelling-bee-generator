@@ -1,5 +1,5 @@
-import TextWriter from "@library/services/Writers/TextWriter";
-import TextReader from "@library/services/Readers/TextReader";
+import TextWriter from "@library/Writers/TextWriter";
+import TextReader from "@library/Readers/TextReader";
 import path from "path";
 import fs from "fs";
 describe("TextWriter", () => {

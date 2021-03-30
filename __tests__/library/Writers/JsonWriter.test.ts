@@ -1,5 +1,5 @@
-import JsonWriter from "@library/services/Writers/JsonWriter";
-import JsonReader from "@library/services/Readers/JsonReader";
+import JsonWriter from "@library/Writers/JsonWriter";
+import JsonReader from "@library/Readers/JsonReader";
 import path from "path";
 import fs from "fs";
 describe("JsonWriter", () => {

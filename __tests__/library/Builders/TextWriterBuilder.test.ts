@@ -1,6 +1,6 @@
-import Builder from "@library/services/Builders/Builder";
-import TextWriterBuilder from "@library/services/Builders/TextWriterBuilder";
-import TextWriter from "@library/services/Writers/TextWriter";
+import Builder from "@library/Builders/Builder";
+import TextWriterBuilder from "@library/Builders/TextWriterBuilder";
+import TextWriter from "@library/Writers/TextWriter";
 import path from "path";
 import fs from "fs";
 

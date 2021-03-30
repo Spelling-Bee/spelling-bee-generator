@@ -1,11 +1,11 @@
-import OnlyValidCharacters from "./Rules/WordRules/OnlyValidCharacters";
+import OnlyValidCharactersWordRule from "./Rules/WordRules/OnlyValidCharactersWordRule";
 import SpellingBeeGenerator from "./SpellingBeeGenerator";
 import SpellingBeeValidator from "./SpellingBeeValidator";
-import HasEnoughWords from "./Rules/GameRules/HasEnoughWords";
-import Reader from "@library/services/Readers/Reader";
-import Writer from "@library/services/Writers/Writer";
-import TextWriterBuilder from "@library/services/Builders/TextWriterBuilder";
-import TextReaderBuilder from "@library/services/Builders/TextReaderBuilder";
+import HasEnoughWordsGameRule from "./Rules/GameRules/HasEnoughWordsGameRule";
+import Reader from "@library/Readers/Reader";
+import Writer from "@library/Writers/Writer";
+import TextWriterBuilder from "@library/Builders/TextWriterBuilder";
+import TextReaderBuilder from "@library/Builders/TextReaderBuilder";
 import path from "path";
 
 abstract class SpellingBee {
@@ -25,8 +25,8 @@ abstract class SpellingBee {
   }
 
   protected addRules() {
-    this.validator.addWordRule(new OnlyValidCharacters(this.letters));
-    this.validator.addGameRule(new HasEnoughWords(1));
+    this.validator.addWordRule(new OnlyValidCharactersWordRule(this.letters));
+    this.validator.addGameRule(new HasEnoughWordsGameRule(1));
   }
 
   public main() {

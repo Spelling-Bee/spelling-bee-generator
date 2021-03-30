@@ -1,6 +1,6 @@
-import Reader from "@library/services/Readers/Reader";
+import Reader from "@library/Readers/Reader";
 import SpellingBeeValidator from "./SpellingBeeValidator";
-import Writer from "@library/services/Writers/Writer";
+import Writer from "@library/Writers/Writer";
 
 class SpellingBee {
   validator: SpellingBeeValidator;

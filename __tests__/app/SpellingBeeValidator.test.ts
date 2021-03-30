@@ -1,6 +1,6 @@
 import SpellingBeeValidator from "@app/SpellingBeeValidator";
-import OnlyValidCharacters from "@app/Rules/WordRules/OnlyValidCharacters";
-import HasEnoughWords from "@app/Rules/GameRules/HasEnoughWords";
+import OnlyValidCharactersWordRule from "@app/Rules/WordRules/OnlyValidCharactersWordRule";
+import HasEnoughWordsGameRule from "@app/Rules/GameRules/HasEnoughWordsGameRule";
 
 describe("SpellingBeeValidator", () => {
   const letters = ["a", "b", "c"];
@@ -13,13 +13,13 @@ describe("SpellingBeeValidator", () => {
   it("can add rules for words", () => {
     const validator = new SpellingBeeValidator();
     expect(
-      validator.addWordRule(new OnlyValidCharacters(letters))
+      validator.addWordRule(new OnlyValidCharactersWordRule(letters))
     ).toBeTruthy();
   });
 
   it("can add rules for games", () => {
     const validator = new SpellingBeeValidator();
-    expect(validator.addGameRule(new HasEnoughWords())).toBeTruthy();
+    expect(validator.addGameRule(new HasEnoughWordsGameRule())).toBeTruthy();
   });
 
   it("can validate words based on the added word rules", () => {
@@ -27,7 +27,7 @@ describe("SpellingBeeValidator", () => {
     //A validator without any rules always return true
     expect(validator.isWordValid("word")).toBeTruthy();
 
-    validator.addWordRule(new OnlyValidCharacters(letters));
+    validator.addWordRule(new OnlyValidCharactersWordRule(letters));
     expect(validator.isWordValid("word")).toBeFalsy();
     expect(validator.isWordValid("abc")).toBeTruthy();
   });
@@ -37,7 +37,7 @@ describe("SpellingBeeValidator", () => {
     //A validator without any rules always return true
     expect(validator.isGameValid([])).toBeTruthy();
 
-    validator.addGameRule(new HasEnoughWords(2));
+    validator.addGameRule(new HasEnoughWordsGameRule(2));
     expect(validator.isGameValid([])).toBeFalsy();
     expect(validator.isGameValid(["word"])).toBeFalsy();
     expect(validator.isGameValid(["word", "abc"])).toBeTruthy();

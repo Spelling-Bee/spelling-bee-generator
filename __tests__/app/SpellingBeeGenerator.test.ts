@@ -1,11 +1,11 @@
 import fs from "fs";
 import SpellingBeeGenerator from "@app/SpellingBeeGenerator";
 import SpellingBeeValidator from "@app/SpellingBeeValidator";
-import TextReader from "@library/services/Readers/TextReader";
-import TextWriter from "@library/services/Writers/TextWriter";
+import TextReader from "@library/Readers/TextReader";
+import TextWriter from "@library/Writers/TextWriter";
 import path from "path";
-import OnlyValidCharacters from "@app/Rules/WordRules/OnlyValidCharacters";
-import HasEnoughWords from "@app/Rules/GameRules/HasEnoughWords";
+import OnlyValidCharactersWordRule from "@app/Rules/WordRules/OnlyValidCharactersWordRule";
+import HasEnoughWordsGameRule from "@app/Rules/GameRules/HasEnoughWordsGameRule";
 
 describe("SpellingBeeGenerator", () => {
   const dictionary = path.join("__tests__", "stubs", "sample.txt");
@@ -40,11 +40,11 @@ describe("SpellingBeeGenerator", () => {
   });
 
   function addWordRules() {
-    validator.addWordRule(new OnlyValidCharacters(letters));
+    validator.addWordRule(new OnlyValidCharactersWordRule(letters));
   }
 
   function addGameRules() {
-    validator.addGameRule(new HasEnoughWords(3));
+    validator.addGameRule(new HasEnoughWordsGameRule(3));
   }
 
   it("can be initiated with a validator, a dictionary, and a target for the toBeGuessedWords", () => {

@@ -1,4 +1,4 @@
-import TextReader from "@library/services/Readers/TextReader";
+import TextReader from "@library/Readers/TextReader";
 import path from "path";
 describe("TextReader", () => {
   const source = path.join("__tests__", "stubs", "sample.txt");

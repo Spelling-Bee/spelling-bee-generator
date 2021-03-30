@@ -1,6 +1,6 @@
 import GameRule from "./GameRule";
 
-class HasEnoughWords extends GameRule {
+class HasEnoughWordsGameRule extends GameRule {
   minimum: number;
   constructor(minimum: number = 0) {
     super();
@@ -12,4 +12,4 @@ class HasEnoughWords extends GameRule {
   }
 }
 
-export default HasEnoughWords;
+export default HasEnoughWordsGameRule;

@@ -1,10 +1,10 @@
-import OnlyValidCharacters from "../Rules/WordRules/OnlyValidCharacters";
+import OnlyValidCharactersWordRule from "../Rules/WordRules/OnlyValidCharactersWordRule";
 import SpellingBeeGenerator from "../SpellingBeeGenerator";
 import SpellingBeeValidator from "../SpellingBeeValidator";
-import HasEnoughWords from "../Rules/GameRules/HasEnoughWords";
+import HasEnoughWordsGameRule from "../Rules/GameRules/HasEnoughWordsGameRule";
 import { SpellingBeeSettings } from "@app/types";
-import Reader from "@library/services/Readers/Reader";
-import Writer from "@library/services/Writers/Writer";
+import Reader from "@library/Readers/Reader";
+import Writer from "@library/Writers/Writer";
 
 class BasicMode {
   validator: SpellingBeeValidator;
@@ -19,8 +19,10 @@ class BasicMode {
   }
 
   protected addRules() {
-    this.validator.addWordRule(new OnlyValidCharacters(this.settings.letters));
-    this.validator.addGameRule(new HasEnoughWords(1));
+    this.validator.addWordRule(
+      new OnlyValidCharactersWordRule(this.settings.letters)
+    );
+    this.validator.addGameRule(new HasEnoughWordsGameRule(1));
   }
 
   public createGame(reader: Reader, writer: Writer) {

@@ -1,4 +1,4 @@
-import JsonReader from "@library/services/Readers/JsonReader";
+import JsonReader from "@library/Readers/JsonReader";
 import path from "path";
 
 describe("JsonReader", () => {
