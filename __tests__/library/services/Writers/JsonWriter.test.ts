@@ -1,10 +1,20 @@
-import JsonWriter from "../../src/Writers/JsonWriter";
+import JsonWriter from "@library/services/Writers/JsonWriter";
+import JsonReader from "@library/services/Readers/JsonReader";
 import path from "path";
 import fs from "fs";
 describe("JsonWriter", () => {
-  const target = path.join(path.dirname(__dirname), "temp");
+  const target = path.join("temp");
   const fileName = "test.json";
   const filePath = path.join(target, fileName);
+
+  beforeEach(() => {
+    if (!fs.existsSync(target)) {
+      fs.mkdirSync(target);
+    }
+    if (!fs.existsSync(filePath)) {
+      fs.writeFileSync(filePath, JSON.stringify([]));
+    }
+  });
 
   afterEach(() => {
     if (fs.existsSync(filePath)) {
@@ -21,10 +31,12 @@ describe("JsonWriter", () => {
 
   it("can write to json", () => {
     const writer = new JsonWriter(filePath);
-
     writer.writeLine("test");
-    expect(require(filePath)).toEqual(["test"]);
     writer.writeLine("test2");
-    expect(require(filePath)).toEqual(["test", "test2"]);
+
+    const reader = new JsonReader(filePath);
+
+    expect(reader.readLine()).toEqual("test");
+    expect(reader.readLine()).toEqual("test2");
   });
 });

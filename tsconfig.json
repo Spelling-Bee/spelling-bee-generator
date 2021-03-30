@@ -10,7 +10,9 @@
     "baseUrl": ".",
     "resolveJsonModule": false,
     "paths": {
-      "*": ["node_modules/*"]
+      "*": ["node_modules/*"],
+      "@app/*": ["src/app/*"],
+      "@library/*": ["src/library/*"]
     }
   },
   "include": ["src/**/*"],

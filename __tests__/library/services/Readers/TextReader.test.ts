@@ -1,7 +1,7 @@
-import TextReader from "../../src/Readers/TextReader";
+import TextReader from "@library/services/Readers/TextReader";
 import path from "path";
 describe("TextReader", () => {
-  const source = path.join(path.dirname(__dirname), "stubs", "sample.txt");
+  const source = path.join("__tests__", "stubs", "sample.txt");
 
   it("can only be instantiated with a local source as a string", () => {
     const reader = new TextReader(source);

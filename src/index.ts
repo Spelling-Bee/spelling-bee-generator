@@ -1,21 +1,18 @@
-import SpellingBee from "./SpellingBee";
-import Validator from "./Validator";
-import HasEnoughWords from "./Rules/GameRules/HasEnoughWords";
-import OnlyValidCharacters from "./Rules/WordRules/OnlyValidCharacters";
+import Generator from "@app/SpellingBeeGenerator";
+import Validator from "./app/SpellingBeeValidator";
+import HasEnoughWords from "./app/Rules/GameRules/HasEnoughWords";
+import OnlyValidCharacters from "./app/Rules/WordRules/OnlyValidCharacters";
 import path from "path";
 import fs from "fs";
-import TextReader from "./Readers/TextReader";
-import TextWriter from "./Writers/TextWriter";
-import JsonWriter from "./Writers/JsonWriter";
+import TextReader from "./library/services/Readers/TextReader";
+import TextWriter from "./library/services/Writers/TextWriter";
+import JsonWriter from "./library/services/Writers/JsonWriter";
+import BasicMode from "@app/Modes/BasicMode";
 function code() {
   const letters = ["a", "b"];
-  const validator = new Validator();
-  validator.addGameRule(new HasEnoughWords(2));
-  validator.addWordRule(new OnlyValidCharacters(letters));
 
-  const spellingBee = new SpellingBee(validator);
-
-  const id = "ab";
+  const game = new BasicMode(letters);
+  const id = game.createId();
 
   // THESE LINES ARE SPECIFIC FOR USING A TEXT SYSTEM, USE AN ADAPTER TO GET RID OF IT
   const target = path.join(path.dirname(__dirname), "output", "games");
@@ -23,10 +20,6 @@ function code() {
   const filePath = path.join(target, fileName);
 
   const dictionary = new TextReader("source");
-  const game = new TextWriter(filePath);
-
-  spellingBee.generateToBeGuessedWords(dictionary);
-  spellingBee.writeToBeGuessedWords(game);
 }
 
 function transformWordNet() {
@@ -46,6 +39,31 @@ function transformWordNet() {
   words.forEach(writer.writeLine.bind(writer));
 }
 
-// function generateJSON() {}
+const alphabet = Array.from(
+  { length: "z".charCodeAt(0) - "a".charCodeAt(0) + 1 },
+  (_, i) => String.fromCharCode("a".charCodeAt(0) + i)
+);
+
+function createId(letters: string[], pivotLetter: string) {}
+
+/*
+function generateGameOfGenerator(letters: string[], index: number) {
+  for (let letter of alphabet) {
+    letters[index] = letter;
+  }
+
+  const validator = new Validator();
+  const sb = new Generator(validator);
+
+  const reader = new TextReader(dictionary);
+  const writer = new TextWriter(target);
+
+  validator.addGameRule(new HasEnoughWords(10));
+  validator.addWordRule(new OnlyValidCharacters(letters));
+
+  sb.generateToBeGuessedWords(reader);
+  sb.writeToBeGuessedWords(writer);
+}
+*/
 
 module.exports = transformWordNet;

@@ -11,10 +11,6 @@ class TextReader extends FileReader {
     }
     yield null;
   }
-
-  public readLine() {
-    return this.iterator.next().value;
-  }
 }
 
 export default TextReader;

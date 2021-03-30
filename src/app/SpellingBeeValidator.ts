@@ -1,7 +1,7 @@
 import GameRule from "./Rules/GameRules/GameRule";
 import WordRule from "./Rules/WordRules/WordRule";
 
-class Validator {
+class SpellingBeeValidator {
   wordRules: WordRule[] = [];
   gameRules: GameRule[] = [];
 
@@ -34,4 +34,4 @@ class Validator {
   }
 }
 
-export default Validator;
+export default SpellingBeeValidator;

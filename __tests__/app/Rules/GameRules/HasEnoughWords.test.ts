@@ -1,5 +1,5 @@
-import HasEnoughWords from "../../../src/Rules/GameRules/HasEnoughWords";
-import GameRule from "../../../src/Rules/GameRules/GameRule";
+import HasEnoughWords from "@app/Rules/GameRules/HasEnoughWords";
+import GameRule from "@app/Rules/GameRules/GameRule";
 
 describe("HasEnoughWords", () => {
   it("can be instantiated", () => {

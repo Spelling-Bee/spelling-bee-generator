@@ -1,5 +1,5 @@
-import OnlyValidCharacters from "../../../src/Rules/WordRules/OnlyValidCharacters";
-import WordRule from "../../../src/Rules/WordRules/WordRule";
+import OnlyValidCharacters from "@app/Rules/WordRules/OnlyValidCharacters";
+import WordRule from "@app/Rules/WordRules/WordRule";
 
 describe("OnlyValidCharacters", () => {
   const letters = ["a", "b", "c"];
