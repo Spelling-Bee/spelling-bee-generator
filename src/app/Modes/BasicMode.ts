@@ -3,30 +3,37 @@ import SpellingBeeGenerator from "../SpellingBeeGenerator";
 import SpellingBeeValidator from "../SpellingBeeValidator";
 import HasEnoughWordsGameRule from "../Rules/GameRules/HasEnoughWordsGameRule";
 import { SpellingBeeSettings } from "@app/types";
-import Reader from "@library/Readers/Reader";
-import Writer from "@library/Writers/Writer";
+import ReaderFactory from "@library/Factories/ReaderFactory";
+import WriterFactory from "@library/Factories/WriterFactory";
 
 class BasicMode {
   validator: SpellingBeeValidator;
   generator: SpellingBeeGenerator;
   settings: SpellingBeeSettings;
-  letters: string[];
 
-  constructor(letters: string[]) {
+  constructor(settings: SpellingBeeSettings) {
     this.validator = new SpellingBeeValidator();
     this.generator = new SpellingBeeGenerator(this.validator);
-    this.settings = { letters };
+    this.settings = settings;
   }
 
   protected addRules() {
     this.validator.addWordRule(
       new OnlyValidCharactersWordRule(this.settings.letters)
     );
-    this.validator.addGameRule(new HasEnoughWordsGameRule(1));
+    this.validator.addGameRule(new HasEnoughWordsGameRule(this.settings.bound));
   }
 
-  public createGame(reader: Reader, writer: Writer) {
+  public createGame() {
     this.addRules();
+
+    const reader = new ReaderFactory(this.settings.dictionary).getObject();
+    const writer = new WriterFactory(
+      this.settings.storage,
+      this.settings.target,
+      this.createId()
+    ).getObject();
+
     this.generator.generate(reader, writer);
   }
 

@@ -12,7 +12,8 @@
     "paths": {
       "*": ["node_modules/*"],
       "@app/*": ["src/app/*"],
-      "@library/*": ["src/library/*"]
+      "@library/*": ["src/library/*"],
+      "@helpers/*": ["src/helpers/*"]
     }
   },
   "include": ["src/**/*"],

@@ -12,6 +12,7 @@ module.exports = {
         alias: {
           "@library": "./src/library",
           "@app": "./src/app",
+          "@helpers": "./src/helpers",
         },
       },
     ],

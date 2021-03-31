@@ -6,7 +6,7 @@
   "scripts": {
     "prebuild": "tslint -c tslint.json -p tsconfig.json --fix",
     "build": "rm -rf dist && tsc",
-    "main": "node index.js",
+    "generate": "node dist/scripts/generate.js",
     "test": "jest"
   },
   "keywords": [
@@ -30,6 +30,12 @@
     "typescript": "^4.2.3"
   },
   "dependencies": {
+    "module-alias": "^2.2.2",
     "yargs": "^16.2.0"
+  },
+  "_moduleAliases": {
+    "@app": "dist/app",
+    "@library": "dist/library",
+    "@helpers": "dist/helpers"
   }
 }

@@ -2,29 +2,21 @@ import JsonWriter from "@library/Writers/JsonWriter";
 import JsonReader from "@library/Readers/JsonReader";
 import path from "path";
 import fs from "fs";
+import deleteDirectoryRecursively from "@helpers/deleteDirectoryRecursively";
+
 describe("JsonWriter", () => {
   const target = path.join("temp");
   const fileName = "test.json";
   const filePath = path.join(target, fileName);
 
-  beforeEach(() => {
-    if (!fs.existsSync(target)) {
-      fs.mkdirSync(target);
-    }
-    if (!fs.existsSync(filePath)) {
-      fs.writeFileSync(filePath, JSON.stringify([]));
-    }
-  });
-
   afterEach(() => {
-    if (fs.existsSync(filePath)) {
-      fs.unlinkSync(filePath);
-      fs.rmdirSync(target);
-    }
+    deleteDirectoryRecursively(target);
   });
 
   it("can be instantiated", () => {
+    expect(fs.existsSync(target)).toBeFalsy();
     const writer = new JsonWriter(filePath);
+    expect(fs.existsSync(target)).toBeTruthy();
 
     expect(writer).toBeInstanceOf(JsonWriter);
   });

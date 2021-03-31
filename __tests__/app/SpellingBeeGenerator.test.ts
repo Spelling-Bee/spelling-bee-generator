@@ -6,6 +6,8 @@ import TextWriter from "@library/Writers/TextWriter";
 import path from "path";
 import OnlyValidCharactersWordRule from "@app/Rules/WordRules/OnlyValidCharactersWordRule";
 import HasEnoughWordsGameRule from "@app/Rules/GameRules/HasEnoughWordsGameRule";
+import createDirectoryRecursively from "@helpers/createDirectoryRecursively";
+import deleteDirectoryRecursively from "@helpers/deleteDirectoryRecursively";
 
 describe("SpellingBeeGenerator", () => {
   const dictionary = path.join("__tests__", "stubs", "sample.txt");
@@ -21,9 +23,7 @@ describe("SpellingBeeGenerator", () => {
   let writer: TextWriter;
 
   beforeEach(() => {
-    if (!fs.existsSync(target)) {
-      fs.mkdirSync(target);
-    }
+    createDirectoryRecursively(target);
 
     validator = new SpellingBeeValidator();
     reader = new TextReader(dictionary);
@@ -31,12 +31,7 @@ describe("SpellingBeeGenerator", () => {
   });
 
   afterEach(() => {
-    if (fs.existsSync(filePath)) {
-      fs.unlinkSync(filePath);
-    }
-    if (fs.existsSync(target)) {
-      fs.rmdirSync(target);
-    }
+    deleteDirectoryRecursively(target);
   });
 
   function addWordRules() {

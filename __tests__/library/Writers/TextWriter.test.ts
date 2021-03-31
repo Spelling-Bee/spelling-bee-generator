@@ -2,26 +2,21 @@ import TextWriter from "@library/Writers/TextWriter";
 import TextReader from "@library/Readers/TextReader";
 import path from "path";
 import fs from "fs";
+import deleteDirectoryRecursively from "@helpers/deleteDirectoryRecursively";
+
 describe("TextWriter", () => {
   const target = path.join("temp");
   const fileName = "test.txt";
   const filePath = path.join(target, fileName);
 
-  beforeEach(() => {
-    if (!fs.existsSync(target)) {
-      fs.mkdirSync(target);
-    }
-  });
-
   afterEach(() => {
-    if (fs.existsSync(filePath)) {
-      fs.unlinkSync(filePath);
-      fs.rmdirSync(target);
-    }
+    deleteDirectoryRecursively(target);
   });
 
-  it("can be instantiated with a path and filePath", () => {
+  it("can be instantiated with a filePath, creates the target if it doesnt exist", () => {
+    expect(fs.existsSync(target)).toBeFalsy();
     const writer = new TextWriter(filePath);
+    expect(fs.existsSync(target)).toBeTruthy();
 
     expect(writer).toBeInstanceOf(TextWriter);
   });

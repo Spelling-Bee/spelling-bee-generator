@@ -1,6 +1,7 @@
 import Reader from "@library/Readers/Reader";
 import SpellingBeeValidator from "./SpellingBeeValidator";
 import Writer from "@library/Writers/Writer";
+import removeDuplicatesFromArray from "@helpers/removeDuplicatesFromArray";
 
 class SpellingBee {
   validator: SpellingBeeValidator;
@@ -18,7 +19,7 @@ class SpellingBee {
         toBeGuessedWords.push(word);
       }
     }
-    return toBeGuessedWords;
+    return removeDuplicatesFromArray(toBeGuessedWords);
   }
 
   public writeToBeGuessedWords(toBeGuessedWords: string[], writer: Writer) {
