@@ -2,16 +2,16 @@ import OnlyValidCharactersWordRule from "../Rules/WordRules/OnlyValidCharactersW
 import SpellingBeeGenerator from "../SpellingBeeGenerator";
 import SpellingBeeValidator from "../SpellingBeeValidator";
 import HasEnoughWordsGameRule from "../Rules/GameRules/HasEnoughWordsGameRule";
-import { SpellingBeeSettings } from "@app/types";
+import { SpellingBeeBasicSetting } from "@app/types";
 import ReaderFactory from "@library/Factories/ReaderFactory";
 import WriterFactory from "@library/Factories/WriterFactory";
 
 class BasicMode {
   validator: SpellingBeeValidator;
   generator: SpellingBeeGenerator;
-  settings: SpellingBeeSettings;
+  settings: SpellingBeeBasicSetting;
 
-  constructor(settings: SpellingBeeSettings) {
+  constructor(settings: SpellingBeeBasicSetting) {
     this.validator = new SpellingBeeValidator();
     this.generator = new SpellingBeeGenerator(this.validator);
     this.settings = settings;
@@ -41,7 +41,7 @@ class BasicMode {
     return BasicMode.createId(this.settings);
   }
 
-  static createId(settings: SpellingBeeSettings) {
+  static createId(settings: SpellingBeeBasicSetting) {
     return settings.letters.sort().toString().split(",").join("");
   }
 }
