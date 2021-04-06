@@ -5,6 +5,7 @@ import HasEnoughWordsGameRule from "../Rules/GameRules/HasEnoughWordsGameRule";
 import { SpellingBeeBasicSetting } from "@app/types";
 import ReaderFactory from "@library/Factories/ReaderFactory";
 import WriterFactory from "@library/Factories/WriterFactory";
+import EachLetterIsUniqueGameRule from "@app/Rules/GameRules/EachLetterIsUniqueGameRule";
 
 class BasicMode {
   validator: SpellingBeeValidator;
@@ -22,6 +23,9 @@ class BasicMode {
       new OnlyValidCharactersWordRule(this.settings.letters)
     );
     this.validator.addGameRule(new HasEnoughWordsGameRule(this.settings.bound));
+    this.validator.addGameRule(
+      new EachLetterIsUniqueGameRule(this.settings.letters)
+    );
   }
 
   public createGame() {
