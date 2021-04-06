@@ -1,5 +1,4 @@
 export interface SpellingBeeBasicSetting {
-  letters: string[];
   bound: number;
   dictionary: string;
   target: string;

@@ -11,21 +11,20 @@ class BasicMode {
   validator: SpellingBeeValidator;
   generator: SpellingBeeGenerator;
   settings: SpellingBeeBasicSetting;
+  letters: string[];
 
-  constructor(settings: SpellingBeeBasicSetting) {
+  constructor(letters: string[], settings: SpellingBeeBasicSetting) {
     this.validator = new SpellingBeeValidator();
     this.generator = new SpellingBeeGenerator(this.validator);
+
+    this.letters = letters.map((letter) => letter.toLowerCase());
     this.settings = settings;
   }
 
   protected addRules() {
-    this.validator.addWordRule(
-      new OnlyValidCharactersWordRule(this.settings.letters)
-    );
+    this.validator.addWordRule(new OnlyValidCharactersWordRule(this.letters));
     this.validator.addGameRule(new HasEnoughWordsGameRule(this.settings.bound));
-    this.validator.addGameRule(
-      new EachLetterIsUniqueGameRule(this.settings.letters)
-    );
+    this.validator.addGameRule(new EachLetterIsUniqueGameRule(this.letters));
   }
 
   public createGame() {
@@ -42,12 +41,14 @@ class BasicMode {
   }
 
   public createId() {
-    return BasicMode.createId(this.settings);
+    return BasicMode.createId(this.letters, this.settings);
   }
 
-  static createId(settings: SpellingBeeBasicSetting) {
-    return settings.letters.sort().toString().split(",").join("");
+  static createId(letters: string[], settings: SpellingBeeBasicSetting) {
+    return [...letters].sort().toString().split(",").join("");
   }
+
+  static generate(settings: SpellingBeeBasicSetting) {}
 }
 
 export default BasicMode;

@@ -17,7 +17,7 @@ class SpellingBeeValidator {
 
   public isWordValid(word: string) {
     for (const wordRule of this.wordRules) {
-      if (!wordRule.isValid(word)) {
+      if (!wordRule.isValid(word.toLowerCase())) {
         return false;
       }
     }
@@ -26,7 +26,9 @@ class SpellingBeeValidator {
 
   public isGameValid(toBeGuessedWords: string[]) {
     for (const gameRule of this.gameRules) {
-      if (!gameRule.isValid(toBeGuessedWords)) {
+      if (
+        !gameRule.isValid(toBeGuessedWords.map((word) => word.toLowerCase()))
+      ) {
         return false;
       }
     }

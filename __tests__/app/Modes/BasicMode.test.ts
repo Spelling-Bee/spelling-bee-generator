@@ -13,7 +13,6 @@ describe("BasicMode", () => {
   const target = path.join("output");
 
   const settings: SpellingBeeBasicSetting = {
-    letters,
     bound: 1,
     dictionary,
     target,
@@ -29,22 +28,22 @@ describe("BasicMode", () => {
   });
 
   it("can be instantiated", () => {
-    const game = new BasicMode(settings);
+    const game = new BasicMode(letters, settings);
 
     expect(game).toBeInstanceOf(BasicMode);
   });
 
   it("can create an id using the static method", () => {
-    expect(BasicMode.createId(settings)).toBe("acr");
+    expect(BasicMode.createId(letters, settings)).toBe("acr");
   });
 
   it("can create an id using the instance method", () => {
-    const game = new BasicMode(settings);
+    const game = new BasicMode(letters, settings);
     expect(game.createId()).toBe("acr");
   });
 
   it("can create a game of spelling bee", () => {
-    const game = new BasicMode(settings);
+    const game = new BasicMode(letters, settings);
 
     const filePath = path.join(target, game.createId() + ".txt");
 
@@ -60,7 +59,7 @@ describe("BasicMode", () => {
   });
 
   it("can create a game of spelling bee with a lower bound of words to be valid", () => {
-    const game = new BasicMode({ ...settings, bound: 3 });
+    const game = new BasicMode(letters, { ...settings, bound: 3 });
 
     const filePath = path.join(target, game.createId() + ".txt");
 

@@ -9,8 +9,8 @@ import HasAtLeastMinimumWordRule from "@app/Rules/WordRules/HasAtLeastMinimumWor
 
 class NYTMode extends BasicMode {
   settings: SpellingBeeNYTSetting;
-  constructor(settings: SpellingBeeNYTSetting) {
-    super(settings);
+  constructor(letters: string[], settings: SpellingBeeNYTSetting) {
+    super(letters, settings);
   }
 
   protected addRules() {
@@ -25,12 +25,12 @@ class NYTMode extends BasicMode {
         this.getPointForWord.bind(this)
       )
     );
-    this.validator.addGameRule(new HasPangramGameRule(this.settings.letters));
+    this.validator.addGameRule(new HasPangramGameRule(this.letters));
   }
 
   public getPointForWord(word: string) {
-    if (isPangram(this.settings.letters, word)) {
-      return this.settings.letters.length + word.length;
+    if (isPangram(this.letters, word)) {
+      return this.letters.length + word.length;
     }
     if (word.length === this.settings.minimum) {
       return 1;
@@ -39,11 +39,11 @@ class NYTMode extends BasicMode {
   }
 
   public createId() {
-    return NYTMode.createId(this.settings);
+    return NYTMode.createId(this.letters, this.settings);
   }
 
-  static createId(settings: SpellingBeeNYTSetting) {
-    const id = super.createId(settings);
+  static createId(letters: string[], settings: SpellingBeeNYTSetting) {
+    const id = super.createId(letters, settings);
     const idArray: string[] = rotateArray(id.split(""), settings.pivot);
     return idArray.join("");
   }
