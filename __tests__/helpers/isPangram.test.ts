@@ -7,6 +7,7 @@ describe("isPangram", () => {
     expect(isPangram(letters, "abc")).toBeTruthy();
     expect(isPangram(letters, "bac")).toBeTruthy();
     expect(isPangram(letters, "cab")).toBeTruthy();
+    expect(isPangram(letters, "caab")).toBeFalsy();
     expect(isPangram(letters, "cabd")).toBeFalsy();
   });
 });

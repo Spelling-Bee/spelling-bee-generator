@@ -16,5 +16,8 @@ describe("HasPangramGameRule", () => {
     expect(
       new HasPangramGameRule(["a", "b"]).isValid(["a", "ab"])
     ).toBeTruthy();
+    expect(
+      new HasPangramGameRule(["a", "b"]).isValid(["a", "aab"])
+    ).toBeFalsy();
   });
 });
