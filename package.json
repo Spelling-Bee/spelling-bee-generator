@@ -7,6 +7,7 @@
     "prebuild": "tslint -c tslint.json -p tsconfig.json --fix",
     "build": "rm -rf dist && tsc",
     "generate": "node dist/scripts/generate.js",
+    "generate-all": "node dist/scripts/generateAll.js",
     "test": "jest"
   },
   "keywords": [

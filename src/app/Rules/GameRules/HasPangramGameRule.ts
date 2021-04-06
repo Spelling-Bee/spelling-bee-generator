@@ -9,7 +9,7 @@ class HasPangramGameRule extends GameRule {
   }
 
   public isValid(toBeGuessedWords: string[]) {
-    for (let toBeGuessedWord of toBeGuessedWords) {
+    for (const toBeGuessedWord of toBeGuessedWords) {
       if (isPangram(this.letters, toBeGuessedWord)) {
         return true;
       }

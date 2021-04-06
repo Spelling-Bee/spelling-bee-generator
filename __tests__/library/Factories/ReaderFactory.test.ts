@@ -7,7 +7,7 @@ describe("ReaderFactory", () => {
   const txtSource = path.join("__tests__", "stubs", "sample.txt");
   const jsonSource = path.join("__tests__", "stubs", "sample.json");
   it("can be instantiated", () => {
-    const factory = new ReaderFactory();
+    const factory = new ReaderFactory("");
 
     expect(factory).toBeInstanceOf(ReaderFactory);
   });

@@ -12,7 +12,7 @@ describe("ReaderFactory", () => {
   });
 
   it("can be instantiated", () => {
-    const factory = new WriterFactory();
+    const factory = new WriterFactory("", "", "");
 
     expect(factory).toBeInstanceOf(WriterFactory);
   });

@@ -24,7 +24,7 @@ describe("SpellingBeeValidator", () => {
 
   it("can validate words based on the added word rules", () => {
     const validator = new SpellingBeeValidator();
-    //A validator without any rules always return true
+    // A validator without any rules always return true
     expect(validator.isWordValid("word")).toBeTruthy();
 
     validator.addWordRule(new OnlyValidCharactersWordRule(letters));
@@ -34,7 +34,7 @@ describe("SpellingBeeValidator", () => {
 
   it("can validate games based on the added game rules", () => {
     const validator = new SpellingBeeValidator();
-    //A validator without any rules always return true
+    // A validator without any rules always return true
     expect(validator.isGameValid([])).toBeTruthy();
 
     validator.addGameRule(new HasEnoughWordsGameRule(2));

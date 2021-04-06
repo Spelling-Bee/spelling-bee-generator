@@ -6,7 +6,8 @@
     "trailing-comma": [false],
     "no-var-requires": [false],
     "no-conditional-assignment": [false],
-    "no-console": [false]
+    "no-console": [false],
+    "prefer-for-of": [false]
   },
   "rulesDirectory": []
 }

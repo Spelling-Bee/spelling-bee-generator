@@ -5,6 +5,7 @@ import yargs from "yargs/yargs";
 import path from "path";
 
 import BasicMode from "@app/Modes/BasicMode";
+import NYTMode from "@app/Modes/NYTMode";
 
 const argv = yargs(hideBin(process.argv))
   .option("letters", {
@@ -36,16 +37,61 @@ const argv = yargs(hideBin(process.argv))
     type: "string",
     choices: ["json", "txt", "mysql"],
   })
+  .option("mode", {
+    alias: "m",
+    describe: "specify the mode",
+    default: "basic",
+    type: "string",
+    choices: ["basic", "nyt"],
+  })
+  .option("pivot", {
+    alias: "p",
+    describe: "specify the pivot",
+    type: "string",
+  })
+  .option("minimum", {
+    describe: "specify the minimum",
+    type: "number",
+  })
+  .option("points", {
+    describe: "specify the points",
+    type: "number",
+  })
   .demandOption(["letters", "dictionary"]).argv;
 
-const { letters, bound, dictionary, target, storage } = argv;
-
-const game = new BasicMode({
-  letters: letters.split(""),
+const {
+  letters,
   bound,
   dictionary,
   target,
   storage,
-});
+  mode,
+  pivot,
+  minimum,
+  points,
+} = argv;
 
-game.createGame();
+if (mode === "basic" || (Array.isArray(mode) && mode[0] === "basic")) {
+  const game = new BasicMode({
+    letters: letters.split(""),
+    bound,
+    dictionary,
+    target,
+    storage,
+  });
+  game.createGame();
+}
+
+if (mode === "nyt" || (Array.isArray(mode) && mode[0] === "nyt")) {
+  const game = new NYTMode({
+    letters: letters.split(""),
+    bound,
+    dictionary,
+    target,
+    storage,
+    pivot,
+    minimum,
+    points,
+  });
+  game.createGame();
+}
