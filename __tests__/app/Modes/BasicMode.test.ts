@@ -1,6 +1,6 @@
 import BasicMode from "@app/Modes/BasicMode";
 import TextReader from "@library/Readers/TextReader";
-import { SpellingBeeSettings } from "@app/types";
+import { SpellingBeeBasicSetting } from "@app/types";
 import path from "path";
 import fs from "fs";
 import createDirectoryRecursively from "@helpers/createDirectoryRecursively";
@@ -12,7 +12,7 @@ describe("BasicMode", () => {
   const dictionary = path.join("__tests__", "stubs", "sample.txt");
   const target = path.join("output");
 
-  const settings: SpellingBeeSettings = {
+  const settings: SpellingBeeBasicSetting = {
     letters,
     bound: 1,
     dictionary,
