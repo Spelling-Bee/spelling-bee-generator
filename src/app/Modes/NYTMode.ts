@@ -1,6 +1,9 @@
 import BasicMode from "./BasicMode";
 import isPangram from "@helpers/isPangram";
-import { SpellingBeeNYTSetting } from "@app/types";
+import {
+  SpellingBeeNYTSetting,
+  SpellingBeeNYTSettingWithPivot,
+} from "@app/types";
 import HasPivotLetterWordRule from "@app/Rules/WordRules/HasPivotLetterWordRule";
 import HasEnoughPointsGameRule from "@app/Rules/GameRules/HasEnoughPointsGameRule";
 import HasPangramGameRule from "@app/Rules/GameRules/HasPangramGameRule";
@@ -8,8 +11,8 @@ import rotateArray from "@helpers/rotateArray";
 import HasAtLeastMinimumWordRule from "@app/Rules/WordRules/HasAtLeastMinimumWordRule";
 
 class NYTMode extends BasicMode {
-  settings: SpellingBeeNYTSetting;
-  constructor(letters: string[], settings: SpellingBeeNYTSetting) {
+  settings: SpellingBeeNYTSettingWithPivot;
+  constructor(letters: string[], settings: SpellingBeeNYTSettingWithPivot) {
     super(letters, settings);
   }
 
@@ -42,10 +45,17 @@ class NYTMode extends BasicMode {
     return NYTMode.createId(this.letters, this.settings);
   }
 
-  static createId(letters: string[], settings: SpellingBeeNYTSetting) {
+  static createId(letters: string[], settings: SpellingBeeNYTSettingWithPivot) {
     const id = super.createId(letters, settings);
     const idArray: string[] = rotateArray(id.split(""), settings.pivot);
     return idArray.join("");
+  }
+
+  static generateGame(letters: string[], settings: SpellingBeeNYTSetting) {
+    for (const pivot of letters) {
+      const game = new this(letters, { ...settings, pivot });
+      game.createGame();
+    }
   }
 }
 

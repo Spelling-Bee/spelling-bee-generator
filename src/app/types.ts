@@ -6,7 +6,10 @@ export interface SpellingBeeBasicSetting {
 }
 
 export interface SpellingBeeNYTSetting extends SpellingBeeBasicSetting {
-  pivot: string;
   minimum: number;
   points: number;
+}
+
+export interface SpellingBeeNYTSettingWithPivot extends SpellingBeeNYTSetting {
+  pivot: string;
 }

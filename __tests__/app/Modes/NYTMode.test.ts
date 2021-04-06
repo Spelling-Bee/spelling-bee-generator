@@ -1,5 +1,8 @@
 import path from "path";
-import { SpellingBeeNYTSetting } from "@app/types";
+import {
+  SpellingBeeNYTSetting,
+  SpellingBeeNYTSettingWithPivot,
+} from "@app/types";
 import NYTMode from "@app/Modes/NYTMode";
 import BasicMode from "@app/Modes/BasicMode";
 import fs from "fs";
@@ -13,7 +16,7 @@ describe("NYTMode", () => {
   const dictionary = path.join("__tests__", "stubs", "sample.txt");
   const target = path.join("output");
 
-  const settings: SpellingBeeNYTSetting = {
+  const settings: SpellingBeeNYTSettingWithPivot = {
     bound: 1,
     dictionary,
     target,
@@ -98,5 +101,32 @@ describe("NYTMode", () => {
     expect(fs.existsSync(filePath)).toBeFalsy();
     game.createGame();
     expect(fs.existsSync(filePath)).toBeFalsy();
+  });
+
+  it("can generate a game using the static method with all different pivots", () => {
+    const settingsWithoutPivot = {
+      ...settings,
+      pivot: undefined,
+      points: 0,
+      minimum: 1,
+    };
+    const filePaths = [];
+    for (let pivot of letters) {
+      filePaths.push(
+        path.join(
+          target,
+          NYTMode.createId(letters, { ...settingsWithoutPivot, pivot }) + ".txt"
+        )
+      );
+    }
+    filePaths.forEach((filePath) => {
+      expect(fs.existsSync(filePath)).toBeFalsy();
+    });
+
+    NYTMode.generateGame(letters, settingsWithoutPivot);
+
+    filePaths.forEach((filePath) => {
+      expect(fs.existsSync(filePath)).toBeTruthy();
+    });
   });
 });

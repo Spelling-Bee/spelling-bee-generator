@@ -6,6 +6,11 @@ import fs from "fs";
 import createDirectoryRecursively from "@helpers/createDirectoryRecursively";
 import deleteDirectoryRecursively from "@helpers/deleteDirectoryRecursively";
 
+const alphabet = Array.from(
+  { length: "z".charCodeAt(0) - "a".charCodeAt(0) + 1 },
+  (_, i) => String.fromCharCode("a".charCodeAt(0) + i)
+);
+
 describe("BasicMode", () => {
   const letters = ["r", "c", "a"];
 
@@ -66,5 +71,35 @@ describe("BasicMode", () => {
     expect(fs.existsSync(filePath)).toBeFalsy();
     game.createGame();
     expect(fs.existsSync(filePath)).toBeFalsy();
+  });
+
+  it("can generate a game using the static method", () => {
+    const filePath = path.join(
+      target,
+      BasicMode.createId(letters, settings) + ".txt"
+    );
+
+    expect(fs.existsSync(filePath)).toBeFalsy();
+    BasicMode.generateGame(letters, settings);
+    expect(fs.existsSync(filePath)).toBeTruthy();
+
+    const gameReader = new TextReader(filePath);
+
+    expect(gameReader.readLine()).toBe("ar");
+    expect(gameReader.readLine()).toBe("car");
+    expect(gameReader.readLine()).toBe(null);
+  });
+
+  it("can generate all games from the dictionary", () => {
+    const filePath = path.join(
+      target,
+      BasicMode.createId(letters, settings) + ".txt"
+    );
+
+    expect(fs.existsSync(filePath)).toBeFalsy();
+
+    BasicMode.generate(settings, 3, alphabet);
+
+    expect(fs.existsSync(filePath)).toBeTruthy();
   });
 });

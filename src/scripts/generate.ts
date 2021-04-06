@@ -72,8 +72,7 @@ const {
 } = argv;
 
 if (mode === "basic" || (Array.isArray(mode) && mode[0] === "basic")) {
-  const game = new BasicMode({
-    letters: letters.split(""),
+  const game = new BasicMode(letters.split(""), {
     bound,
     dictionary,
     target,
@@ -83,8 +82,7 @@ if (mode === "basic" || (Array.isArray(mode) && mode[0] === "basic")) {
 }
 
 if (mode === "nyt" || (Array.isArray(mode) && mode[0] === "nyt")) {
-  const game = new NYTMode({
-    letters: letters.split(""),
+  const game = new NYTMode(letters.split(""), {
     bound,
     dictionary,
     target,

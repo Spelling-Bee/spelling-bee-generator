@@ -6,6 +6,7 @@ import { SpellingBeeBasicSetting } from "@app/types";
 import ReaderFactory from "@library/Factories/ReaderFactory";
 import WriterFactory from "@library/Factories/WriterFactory";
 import EachLetterIsUniqueGameRule from "@app/Rules/GameRules/EachLetterIsUniqueGameRule";
+import isPangram from "@helpers/isPangram";
 
 class BasicMode {
   validator: SpellingBeeValidator;
@@ -48,7 +49,33 @@ class BasicMode {
     return [...letters].sort().toString().split(",").join("");
   }
 
-  static generate(settings: SpellingBeeBasicSetting) {}
+  static generateGame(letters: string[], settings: SpellingBeeBasicSetting) {
+    const game = new this(letters, settings);
+    game.createGame();
+  }
+
+  static generate(
+    settings: SpellingBeeBasicSetting,
+    bound: number,
+    alphabet: string[]
+  ) {
+    const reader = new ReaderFactory(settings.dictionary).getObject();
+    let line: string;
+    while ((line = reader.readLine())) {
+      if (line !== "" && line !== null) {
+        const letters = [...new Set(line.split(""))];
+        const onlyValidLetters = letters.reduce(
+          (previous, letter) => previous && alphabet.includes(letter),
+          true
+        );
+        if (onlyValidLetters) {
+          if (letters.length === bound) {
+            this.generateGame(letters, settings);
+          }
+        }
+      }
+    }
+  }
 }
 
 export default BasicMode;
