@@ -1,24 +1,31 @@
-import BasicMode from "@app/Modes/BasicMode";
+import BasicModeGenerator from "@app/Modes/BasicMode/BasicModeGenerator";
 import TextReader from "@library/Readers/TextReader";
-import { SpellingBeeBasicSetting } from "@app/types";
 import path from "path";
 import fs from "fs";
 import createDirectoryRecursively from "@helpers/createDirectoryRecursively";
 import deleteDirectoryRecursively from "@helpers/deleteDirectoryRecursively";
+import {
+  SpellingBeeGameSettings,
+  SpellingBeeGeneratorSettings,
+} from "@app/types";
 
 const alphabet = Array.from(
   { length: "z".charCodeAt(0) - "a".charCodeAt(0) + 1 },
   (_, i) => String.fromCharCode("a".charCodeAt(0) + i)
 );
 
-describe("BasicMode", () => {
+describe("BasicModeGenerator", () => {
   const letters = ["r", "c", "a"];
 
   const dictionary = path.join("__tests__", "stubs", "sample.txt");
   const target = path.join("output");
 
-  const settings: SpellingBeeBasicSetting = {
+  const gameSettings: SpellingBeeGameSettings = {
+    letters,
     bound: 1,
+  };
+
+  const generatorSettings: SpellingBeeGeneratorSettings = {
     dictionary,
     target,
     storage: "txt",
@@ -33,22 +40,22 @@ describe("BasicMode", () => {
   });
 
   it("can be instantiated", () => {
-    const game = new BasicMode(letters, settings);
+    const game = new BasicModeGenerator(gameSettings, generatorSettings);
 
-    expect(game).toBeInstanceOf(BasicMode);
+    expect(game).toBeInstanceOf(BasicModeGenerator);
   });
 
   it("can create an id using the static method", () => {
-    expect(BasicMode.createId(letters, settings)).toBe("acr");
+    expect(BasicModeGenerator.createId(gameSettings)).toBe("acr");
   });
 
   it("can create an id using the instance method", () => {
-    const game = new BasicMode(letters, settings);
+    const game = new BasicModeGenerator(gameSettings, generatorSettings);
     expect(game.createId()).toBe("acr");
   });
 
   it("can create a game of spelling bee", () => {
-    const game = new BasicMode(letters, settings);
+    const game = new BasicModeGenerator(gameSettings, generatorSettings);
 
     const filePath = path.join(target, game.createId() + ".txt");
 
@@ -64,7 +71,10 @@ describe("BasicMode", () => {
   });
 
   it("can create a game of spelling bee with a lower bound of words to be valid", () => {
-    const game = new BasicMode(letters, { ...settings, bound: 3 });
+    const game = new BasicModeGenerator(
+      { ...gameSettings, bound: 3 },
+      generatorSettings
+    );
 
     const filePath = path.join(target, game.createId() + ".txt");
 
@@ -76,11 +86,11 @@ describe("BasicMode", () => {
   it("can generate a game using the static method", () => {
     const filePath = path.join(
       target,
-      BasicMode.createId(letters, settings) + ".txt"
+      BasicModeGenerator.createId(gameSettings) + ".txt"
     );
 
     expect(fs.existsSync(filePath)).toBeFalsy();
-    BasicMode.generateGame(letters, settings);
+    BasicModeGenerator.generateGame(gameSettings, generatorSettings);
     expect(fs.existsSync(filePath)).toBeTruthy();
 
     const gameReader = new TextReader(filePath);
@@ -93,12 +103,17 @@ describe("BasicMode", () => {
   it("can generate all games from the dictionary", () => {
     const filePath = path.join(
       target,
-      BasicMode.createId(letters, settings) + ".txt"
+      BasicModeGenerator.createId(gameSettings) + ".txt"
     );
 
     expect(fs.existsSync(filePath)).toBeFalsy();
 
-    BasicMode.generate(settings, 3, alphabet);
+    BasicModeGenerator.generateAllGames(
+      gameSettings,
+      generatorSettings,
+      3,
+      alphabet
+    );
 
     expect(fs.existsSync(filePath)).toBeTruthy();
   });

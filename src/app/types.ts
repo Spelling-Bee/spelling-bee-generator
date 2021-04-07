@@ -1,15 +1,20 @@
-export interface SpellingBeeBasicSetting {
-  bound: number;
+export interface SpellingBeeGeneratorSettings {
   dictionary: string;
   target: string;
   storage: string;
 }
 
-export interface SpellingBeeNYTSetting extends SpellingBeeBasicSetting {
+export interface SpellingBeeGameSettings {
+  letters: string[];
+  bound: number;
+}
+
+export interface SpellingBeeNYTGameSettings extends SpellingBeeGameSettings {
   minimum: number;
   points: number;
 }
 
-export interface SpellingBeeNYTSettingWithPivot extends SpellingBeeNYTSetting {
+export interface SpellingBeeNYTGameSettingsWithPivot
+  extends SpellingBeeNYTGameSettings {
   pivot: string;
 }

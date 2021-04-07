@@ -4,8 +4,8 @@ import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
 import path from "path";
 
-import BasicMode from "@app/Modes/BasicMode";
-import NYTMode from "@app/Modes/NYTMode";
+import BasicModeGenerator from "@app/Modes/BasicMode/BasicModeGenerator";
+import NYTModeGenerator from "@app/Modes/NYTMode/NYTModeGenerator";
 
 const argv = yargs(hideBin(process.argv))
   .option("letters", {
@@ -72,24 +72,34 @@ const {
 } = argv;
 
 if (mode === "basic" || (Array.isArray(mode) && mode[0] === "basic")) {
-  const game = new BasicMode(letters.split(""), {
+  const gameSettings = {
+    letters: letters.split(""),
     bound,
+  };
+
+  const generatorSettings = {
     dictionary,
     target,
     storage,
-  });
-  game.createGame();
+  };
+  const generator = new BasicModeGenerator(gameSettings, generatorSettings);
+  generator.createGame();
 }
 
 if (mode === "nyt" || (Array.isArray(mode) && mode[0] === "nyt")) {
-  const game = new NYTMode(letters.split(""), {
+  const gameSettings = {
+    letters: letters.split(""),
     bound,
-    dictionary,
-    target,
-    storage,
     pivot,
     minimum,
     points,
-  });
-  game.createGame();
+  };
+
+  const generatorSettings = {
+    dictionary,
+    target,
+    storage,
+  };
+  const generator = new NYTModeGenerator(gameSettings, generatorSettings);
+  generator.createGame();
 }

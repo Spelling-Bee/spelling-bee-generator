@@ -9,7 +9,7 @@ describe("isPangram", () => {
     expect(isPangram(letters, "cab")).toBeTruthy();
     expect(isPangram(["C", "A", "B"], "cab")).toBeTruthy();
     expect(isPangram(letters, "CAB")).toBeTruthy();
-    expect(isPangram(letters, "caab")).toBeFalsy();
+    expect(isPangram(letters, "caab")).toBeTruthy();
     expect(isPangram(letters, "cabd")).toBeFalsy();
   });
 });

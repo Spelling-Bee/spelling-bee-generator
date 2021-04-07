@@ -2,8 +2,11 @@ import Reader from "@library/Readers/Reader";
 import SpellingBeeValidator from "./SpellingBeeValidator";
 import Writer from "@library/Writers/Writer";
 import removeDuplicatesFromArray from "@helpers/removeDuplicatesFromArray";
+import { SpellingBeeGeneratorSettings } from "./types";
+import ReaderFactory from "@library/Factories/ReaderFactory";
+import WriterFactory from "@library/Factories/WriterFactory";
 
-class SpellingBee {
+class SpellingBeeGenerator {
   validator: SpellingBeeValidator;
 
   constructor(validator: SpellingBeeValidator) {
@@ -32,6 +35,20 @@ class SpellingBee {
     const toBeGuessedWords = this.readToBeGuessedWords(reader);
     this.writeToBeGuessedWords(toBeGuessedWords, writer);
   }
+
+  public createGame(
+    generatorSettings: SpellingBeeGeneratorSettings,
+    id: string
+  ) {
+    const reader = new ReaderFactory(generatorSettings.dictionary).getObject();
+    const writer = new WriterFactory(
+      generatorSettings.storage,
+      generatorSettings.target,
+      id
+    ).getObject();
+
+    this.generate(reader, writer);
+  }
 }
 
-export default SpellingBee;
+export default SpellingBeeGenerator;

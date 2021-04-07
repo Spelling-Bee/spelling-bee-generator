@@ -18,6 +18,6 @@ describe("HasPangramGameRule", () => {
     ).toBeTruthy();
     expect(
       new HasPangramGameRule(["a", "b"]).isValid(["a", "aab"])
-    ).toBeFalsy();
+    ).toBeTruthy();
   });
 });

@@ -1,14 +1,14 @@
 import path from "path";
-import {
-  SpellingBeeNYTSetting,
-  SpellingBeeNYTSettingWithPivot,
-} from "@app/types";
-import NYTMode from "@app/Modes/NYTMode";
-import BasicMode from "@app/Modes/BasicMode";
 import fs from "fs";
 import createDirectoryRecursively from "@helpers/createDirectoryRecursively";
 import deleteDirectoryRecursively from "@helpers/deleteDirectoryRecursively";
 import TextReader from "@library/Readers/TextReader";
+import NYTModeGenerator from "@app/Modes/NYTMode/NYTModeGenerator";
+import BasicModeGenerator from "@app/Modes/BasicMode/BasicModeGenerator";
+import {
+  SpellingBeeGeneratorSettings,
+  SpellingBeeNYTGameSettingsWithPivot,
+} from "@app/types";
 
 describe("NYTMode", () => {
   const letters = ["r", "c", "a"];
@@ -16,14 +16,18 @@ describe("NYTMode", () => {
   const dictionary = path.join("__tests__", "stubs", "sample.txt");
   const target = path.join("output");
 
-  const settings: SpellingBeeNYTSettingWithPivot = {
+  const gameSettings: SpellingBeeNYTGameSettingsWithPivot = {
+    letters,
     bound: 1,
-    dictionary,
-    target,
-    storage: "txt",
     pivot: "r",
     minimum: 2,
     points: 7,
+  };
+
+  const generatorSettings: SpellingBeeGeneratorSettings = {
+    dictionary,
+    target,
+    storage: "txt",
   };
 
   beforeEach(() => {
@@ -35,30 +39,30 @@ describe("NYTMode", () => {
   });
 
   it("can be instantiated and is child of BasicMode", () => {
-    const game = new NYTMode(letters, settings);
+    const game = new NYTModeGenerator(gameSettings, generatorSettings);
 
-    expect(game).toBeInstanceOf(NYTMode);
-    expect(game).toBeInstanceOf(BasicMode);
+    expect(game).toBeInstanceOf(NYTModeGenerator);
+    expect(game).toBeInstanceOf(BasicModeGenerator);
   });
 
   it("can create an id using the static method", () => {
-    expect(NYTMode.createId(letters, settings)).toBe("rac");
+    expect(NYTModeGenerator.createId(gameSettings)).toBe("rac");
   });
 
   it("can create an id using the instance method", () => {
-    const game = new NYTMode(letters, settings);
+    const game = new NYTModeGenerator(gameSettings, generatorSettings);
     expect(game.createId()).toBe("rac");
   });
 
   it("can calculate the points for a word", () => {
-    const game = new NYTMode(letters, settings);
+    const game = new NYTModeGenerator(gameSettings, generatorSettings);
     expect(game.getPointForWord("cr")).toBe(1);
     expect(game.getPointForWord("crr")).toBe(3);
     expect(game.getPointForWord("car")).toBe(6);
   });
 
   it("can create a game of spelling bee", () => {
-    const game = new NYTMode(letters, settings);
+    const game = new NYTModeGenerator(gameSettings, generatorSettings);
 
     const filePath = path.join(target, game.createId() + ".txt");
 
@@ -74,7 +78,10 @@ describe("NYTMode", () => {
   });
 
   it("points are not enough", () => {
-    const game = new NYTMode(letters, { ...settings, points: 8 });
+    const game = new NYTModeGenerator(
+      { ...gameSettings, points: 9 },
+      generatorSettings
+    );
 
     const filePath = path.join(target, game.createId() + ".txt");
 
@@ -84,7 +91,10 @@ describe("NYTMode", () => {
   });
 
   it("cannot create a game of spelling bee with wrong pivot", () => {
-    const game = new NYTMode(letters, { ...settings, pivot: "d" });
+    const game = new NYTModeGenerator(
+      { ...gameSettings, pivot: "d" },
+      generatorSettings
+    );
 
     const filePath = path.join(target, game.createId() + ".txt");
 
@@ -94,7 +104,10 @@ describe("NYTMode", () => {
   });
 
   it("cannot create a game of spelling bee with too high of a minimum", () => {
-    const game = new NYTMode(letters, { ...settings, minimum: 4 });
+    const game = new NYTModeGenerator(
+      { ...gameSettings, minimum: 4 },
+      generatorSettings
+    );
 
     const filePath = path.join(target, game.createId() + ".txt");
 
@@ -104,18 +117,23 @@ describe("NYTMode", () => {
   });
 
   it("can generate a game using the static method with all different pivots", () => {
-    const settingsWithoutPivot = {
-      ...settings,
-      pivot: undefined,
+    const gameSettingsWithoutPivot = {
+      ...gameSettings,
       points: 0,
       minimum: 1,
     };
+
+    delete gameSettingsWithoutPivot.pivot;
+
     const filePaths = [];
-    for (let pivot of letters) {
+    for (const pivot of letters) {
       filePaths.push(
         path.join(
           target,
-          NYTMode.createId(letters, { ...settingsWithoutPivot, pivot }) + ".txt"
+          NYTModeGenerator.createId({
+            ...gameSettingsWithoutPivot,
+            pivot,
+          }) + ".txt"
         )
       );
     }
@@ -123,7 +141,7 @@ describe("NYTMode", () => {
       expect(fs.existsSync(filePath)).toBeFalsy();
     });
 
-    NYTMode.generateGame(letters, settingsWithoutPivot);
+    NYTModeGenerator.generateGame(gameSettingsWithoutPivot, generatorSettings);
 
     filePaths.forEach((filePath) => {
       expect(fs.existsSync(filePath)).toBeTruthy();
