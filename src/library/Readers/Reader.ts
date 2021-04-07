@@ -1,3 +1,5 @@
+import Writer from "@library/Writers/Writer";
+
 abstract class Reader {
   protected iterator: Generator;
 
@@ -10,6 +12,8 @@ abstract class Reader {
   public readLine() {
     return this.iterator.next().value;
   }
+
+  public abstract getWriter(): Writer;
 }
 
 export default Reader;

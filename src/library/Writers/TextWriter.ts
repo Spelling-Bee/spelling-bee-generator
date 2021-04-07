@@ -1,3 +1,4 @@
+import TextReader from "@library/Readers/TextReader";
 import fs from "fs";
 import FileWriter from "./FileWriter";
 
@@ -11,6 +12,10 @@ class TextWriter extends FileWriter {
       line += "\n";
     }
     return line;
+  }
+
+  public getReader() {
+    return new TextReader(this.filePath);
   }
 }
 

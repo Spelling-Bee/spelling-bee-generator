@@ -11,14 +11,13 @@ abstract class FileWriter extends Writer {
     this.filePath = filePath;
 
     this.createTarget();
-    this.deleteFileIfExists();
   }
 
   private createTarget() {
     createDirectoryRecursively(path.dirname(this.filePath));
   }
 
-  private deleteFileIfExists() {
+  protected deleteFileIfExists() {
     if (fs.existsSync(this.filePath)) {
       fs.unlinkSync(this.filePath);
     }

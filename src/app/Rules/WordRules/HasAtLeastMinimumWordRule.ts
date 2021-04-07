@@ -1,6 +1,8 @@
 import WordRule from "./WordRule";
 
 class HasAtLeastMinimumWordRule extends WordRule {
+  errorMessage = "Too short.";
+
   minimum: number;
   constructor(minimum: number) {
     super();

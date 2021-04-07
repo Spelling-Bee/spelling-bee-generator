@@ -1,4 +1,5 @@
 import TextReader from "@library/Readers/TextReader";
+import TextWriter from "@library/Writers/TextWriter";
 import path from "path";
 describe("TextReader", () => {
   const source = path.join("__tests__", "stubs", "sample.txt");
@@ -30,5 +31,11 @@ describe("TextReader", () => {
 
     reader.reset();
     expect(reader.readLine()).toBe("ar");
+  });
+
+  it("can return a TextWriter", () => {
+    const writer = new TextReader(source);
+
+    expect(writer.getWriter()).toBeInstanceOf(TextWriter);
   });
 });

@@ -1,4 +1,5 @@
 import JsonReader from "@library/Readers/JsonReader";
+import JsonWriter from "@library/Writers/JsonWriter";
 import path from "path";
 
 describe("JsonReader", () => {
@@ -15,5 +16,11 @@ describe("JsonReader", () => {
     expect(reader.readLine()).toBe("hello");
     expect(reader.readLine()).toBe("world");
     expect(reader.readLine()).toBe(null);
+  });
+
+  it("can return a TextWriter", () => {
+    const writer = new JsonReader(source);
+
+    expect(writer.getWriter()).toBeInstanceOf(JsonWriter);
   });
 });

@@ -9,6 +9,10 @@ describe("TextWriter", () => {
   const fileName = "test.txt";
   const filePath = path.join(target, fileName);
 
+  beforeAll(() => {
+    deleteDirectoryRecursively(target);
+  });
+
   afterEach(() => {
     deleteDirectoryRecursively(target);
   });
@@ -32,5 +36,12 @@ describe("TextWriter", () => {
     expect(reader.readLine()).toBe("Hello World");
     expect(reader.readLine()).toBe("Hello World2");
     expect(reader.readLine()).toBe("Hello World3");
+  });
+
+  it("can return a TextReader", () => {
+    const writer = new TextWriter(filePath);
+    writer.writeLine("test");
+
+    expect(writer.getReader()).toBeInstanceOf(TextReader);
   });
 });

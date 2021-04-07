@@ -1,6 +1,7 @@
 import WordRule from "./WordRule";
 
 class OnlyValidCharactersWordRule extends WordRule {
+  errorMessage = "Invalid Characters.";
   letters: string[];
 
   constructor(letters: string[]) {

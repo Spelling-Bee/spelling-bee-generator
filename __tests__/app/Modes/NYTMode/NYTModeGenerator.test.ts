@@ -30,6 +30,10 @@ describe("NYTMode", () => {
     storage: "txt",
   };
 
+  beforeAll(() => {
+    deleteDirectoryRecursively(target);
+  });
+
   beforeEach(() => {
     createDirectoryRecursively(target);
   });

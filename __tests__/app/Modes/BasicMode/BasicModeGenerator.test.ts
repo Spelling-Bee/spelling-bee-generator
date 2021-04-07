@@ -31,6 +31,10 @@ describe("BasicModeGenerator", () => {
     storage: "txt",
   };
 
+  beforeAll(() => {
+    deleteDirectoryRecursively(target);
+  });
+
   beforeEach(() => {
     createDirectoryRecursively(target);
   });

@@ -1,6 +1,7 @@
 import WordRule from "./WordRule";
 
 class HasPivotLetterWordRule extends WordRule {
+  errorMessage = "Pivot Letter missing.";
   pivotLetter: string;
   constructor(pivotLetter: string) {
     super();

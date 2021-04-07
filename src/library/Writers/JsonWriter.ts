@@ -1,5 +1,6 @@
 import FileWriter from "./FileWriter";
 import fs from "fs";
+import JsonReader from "@library/Readers/JsonReader";
 
 class JsonWriter extends FileWriter {
   private createEmptyJson() {
@@ -15,6 +16,10 @@ class JsonWriter extends FileWriter {
     const json = JSON.parse(file.toString());
     json.push(word);
     fs.writeFileSync(this.filePath, JSON.stringify(json));
+  }
+
+  public getReader() {
+    return new JsonReader(this.filePath);
   }
 }
 export default JsonWriter;

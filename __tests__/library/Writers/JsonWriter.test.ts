@@ -9,6 +9,10 @@ describe("JsonWriter", () => {
   const fileName = "test.json";
   const filePath = path.join(target, fileName);
 
+  beforeAll(() => {
+    deleteDirectoryRecursively(target);
+  });
+
   afterEach(() => {
     deleteDirectoryRecursively(target);
   });
@@ -30,5 +34,12 @@ describe("JsonWriter", () => {
 
     expect(reader.readLine()).toEqual("test");
     expect(reader.readLine()).toEqual("test2");
+  });
+
+  it("can return a JsonReader", () => {
+    const writer = new JsonWriter(filePath);
+    writer.writeLine("test");
+
+    expect(writer.getReader()).toBeInstanceOf(JsonReader);
   });
 });

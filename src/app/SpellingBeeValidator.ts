@@ -15,13 +15,21 @@ class SpellingBeeValidator {
     return true;
   }
 
-  public isWordValid(word: string) {
+  public isWordValidWithErrorMessage(word: string) {
     for (const wordRule of this.wordRules) {
       if (!wordRule.isValid(word.toLowerCase())) {
-        return false;
+        throw wordRule.errorMessage;
       }
     }
     return true;
+  }
+
+  public isWordValid(word: string) {
+    try {
+      return this.isWordValidWithErrorMessage(word);
+    } catch (error) {
+      return false;
+    }
   }
 
   public isGameValid(toBeGuessedWords: string[]) {

@@ -22,6 +22,10 @@ describe("SpellingBeeGenerator", () => {
   let reader: TextReader;
   let writer: TextWriter;
 
+  beforeAll(() => {
+    deleteDirectoryRecursively(target);
+  });
+
   beforeEach(() => {
     createDirectoryRecursively(target);
 
