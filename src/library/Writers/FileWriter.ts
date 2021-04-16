@@ -17,7 +17,7 @@ abstract class FileWriter extends Writer {
     createDirectoryRecursively(path.dirname(this.filePath));
   }
 
-  protected deleteFileIfExists() {
+  public reset() {
     if (fs.existsSync(this.filePath)) {
       fs.unlinkSync(this.filePath);
     }

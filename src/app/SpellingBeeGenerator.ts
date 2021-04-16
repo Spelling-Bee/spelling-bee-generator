@@ -26,6 +26,7 @@ class SpellingBeeGenerator {
   }
 
   public writeToBeGuessedWords(toBeGuessedWords: string[], writer: Writer) {
+    writer.reset();
     if (this.validator.isGameValid(toBeGuessedWords)) {
       toBeGuessedWords.forEach(writer.writeLine.bind(writer));
     }

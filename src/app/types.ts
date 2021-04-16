@@ -12,9 +12,5 @@ export interface SpellingBeeGameSettings {
 export interface SpellingBeeNYTGameSettings extends SpellingBeeGameSettings {
   minimum: number;
   points: number;
-}
-
-export interface SpellingBeeNYTGameSettingsWithPivot
-  extends SpellingBeeNYTGameSettings {
   pivot: string;
 }

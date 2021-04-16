@@ -7,7 +7,7 @@ import NYTModeGenerator from "@app/Modes/NYTMode/NYTModeGenerator";
 import BasicModeGenerator from "@app/Modes/BasicMode/BasicModeGenerator";
 import {
   SpellingBeeGeneratorSettings,
-  SpellingBeeNYTGameSettingsWithPivot,
+  SpellingBeeNYTGameSettings,
 } from "@app/types";
 
 describe("NYTMode", () => {
@@ -16,7 +16,7 @@ describe("NYTMode", () => {
   const dictionary = path.join("__tests__", "stubs", "sample.txt");
   const target = path.join("output");
 
-  const gameSettings: SpellingBeeNYTGameSettingsWithPivot = {
+  const gameSettings: SpellingBeeNYTGameSettings = {
     letters,
     bound: 1,
     pivot: "r",
@@ -118,37 +118,5 @@ describe("NYTMode", () => {
     expect(fs.existsSync(filePath)).toBeFalsy();
     game.createGame();
     expect(fs.existsSync(filePath)).toBeFalsy();
-  });
-
-  it("can generate a game using the static method with all different pivots", () => {
-    const gameSettingsWithoutPivot = {
-      ...gameSettings,
-      points: 0,
-      minimum: 1,
-    };
-
-    delete gameSettingsWithoutPivot.pivot;
-
-    const filePaths = [];
-    for (const pivot of letters) {
-      filePaths.push(
-        path.join(
-          target,
-          NYTModeGenerator.createId({
-            ...gameSettingsWithoutPivot,
-            pivot,
-          }) + ".txt"
-        )
-      );
-    }
-    filePaths.forEach((filePath) => {
-      expect(fs.existsSync(filePath)).toBeFalsy();
-    });
-
-    NYTModeGenerator.generateGame(gameSettingsWithoutPivot, generatorSettings);
-
-    filePaths.forEach((filePath) => {
-      expect(fs.existsSync(filePath)).toBeTruthy();
-    });
   });
 });

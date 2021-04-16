@@ -86,39 +86,4 @@ describe("BasicModeGenerator", () => {
     game.createGame();
     expect(fs.existsSync(filePath)).toBeFalsy();
   });
-
-  it("can generate a game using the static method", () => {
-    const filePath = path.join(
-      target,
-      BasicModeGenerator.createId(gameSettings) + ".txt"
-    );
-
-    expect(fs.existsSync(filePath)).toBeFalsy();
-    BasicModeGenerator.generateGame(gameSettings, generatorSettings);
-    expect(fs.existsSync(filePath)).toBeTruthy();
-
-    const gameReader = new TextReader(filePath);
-
-    expect(gameReader.readLine()).toBe("ar");
-    expect(gameReader.readLine()).toBe("car");
-    expect(gameReader.readLine()).toBe(null);
-  });
-
-  it("can generate all games from the dictionary", () => {
-    const filePath = path.join(
-      target,
-      BasicModeGenerator.createId(gameSettings) + ".txt"
-    );
-
-    expect(fs.existsSync(filePath)).toBeFalsy();
-
-    BasicModeGenerator.generateAllGames(
-      gameSettings,
-      generatorSettings,
-      3,
-      alphabet
-    );
-
-    expect(fs.existsSync(filePath)).toBeTruthy();
-  });
 });

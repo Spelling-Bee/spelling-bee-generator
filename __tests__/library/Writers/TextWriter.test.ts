@@ -44,4 +44,13 @@ describe("TextWriter", () => {
 
     expect(writer.getReader()).toBeInstanceOf(TextReader);
   });
+
+  it("can delete its file", () => {
+    const writer = new TextWriter(filePath);
+    writer.writeLine("test");
+
+    expect(fs.existsSync(filePath)).toBeTruthy();
+    writer.reset();
+    expect(fs.existsSync(filePath)).toBeFalsy();
+  });
 });

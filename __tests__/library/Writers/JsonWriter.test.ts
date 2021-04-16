@@ -42,4 +42,13 @@ describe("JsonWriter", () => {
 
     expect(writer.getReader()).toBeInstanceOf(JsonReader);
   });
+
+  it("can delete its file", () => {
+    const writer = new JsonWriter(filePath);
+    writer.writeLine("test");
+
+    expect(fs.existsSync(filePath)).toBeTruthy();
+    writer.reset();
+    expect(fs.existsSync(filePath)).toBeFalsy();
+  });
 });

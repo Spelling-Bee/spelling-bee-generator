@@ -23,7 +23,7 @@ class SpellingBeeGame {
     let line: string;
     while ((line = writerReader.readLine())) {
       if (word === line) {
-        throw "Already found.";
+        throw new Error("Already found.");
       }
     }
     return true;
@@ -37,7 +37,7 @@ class SpellingBeeGame {
         return true;
       }
     }
-    throw "Word not in the list.";
+    throw new Error("Word not in the list.");
   }
 
   public checkGuess(word: string) {
